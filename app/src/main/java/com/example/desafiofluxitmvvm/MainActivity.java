@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements PersonViewModel.s
 
         private void netxPage() {
             page++;
-            adapterUser.removeNull();
             model.getNextPage(20, seed, page).observe(MainActivity.this, resultResponse -> {
+                adapterUser.removeNull();
                 responseListUpdate.addAll(resultResponse.getRamdomUserResponses());
                 adapterUser.addData(responseListUpdate);
                 infiniteScrollListener.setLoaded();
