@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Desafio FluxIt MVVM</string>
     <string name="google_maps_api">AIzaSyC2zHDanc-n-ZZDusS0Z9LSbD0wDtT9GUM</string>
+    <string name="buscar">Buscar</string>
 
 </resources>

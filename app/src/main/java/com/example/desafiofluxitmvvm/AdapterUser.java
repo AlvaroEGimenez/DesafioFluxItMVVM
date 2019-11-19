@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -13,22 +15,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.desafiofluxitmvvm.models.RamdomUserResponse;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.RandomAccess;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AdapterUser extends RecyclerView.Adapter<AdapterUser.CustomViewHolder> {
+public class AdapterUser extends RecyclerView.Adapter<AdapterUser.CustomViewHolder> implements Filterable {
     private static final int VIEW_TYPE_ITEM = 0;
     public static final int VIEW_TYPE_LOADING = 1;
     private List<RamdomUserResponse> responseList;
+    private List<RamdomUserResponse> responseListFilter;
     private Context context;
     private UserClick userClick;
 
 
     public AdapterUser(List<RamdomUserResponse> responseList, Context context, UserClick userClick) {
         this.responseList = responseList;
+        this.responseListFilter = responseList;
         this.context = context;
         this.userClick = userClick;
     }
@@ -78,6 +84,35 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.CustomViewHold
         notifyItemRemoved(responseList.size());
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String charString = constraint.toString();
+                if (charString.isEmpty()){
+                    responseList = responseListFilter;
+                }else {
+                    List<RamdomUserResponse> filterList = new ArrayList<>();
+                    for (RamdomUserResponse response : responseListFilter){
+                        if (response.getName().getFirst().toLowerCase().contains(charString))
+                            filterList.add(response);
+                    }
+                    responseList = filterList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = responseList;
+
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                    responseList = (List<RamdomUserResponse>) results.values;
+                    notifyDataSetChanged();
+            }
+        };
+    }
 
 
     class DataHolder extends CustomViewHolder {
