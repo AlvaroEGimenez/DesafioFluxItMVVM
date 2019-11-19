@@ -158,7 +158,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         LatLng latLng = new LatLng(lat,longitude);
         moveCamera(latLng,15f);
         mMap.addMarker(new MarkerOptions().position(latLng));
-        Toast.makeText(this, "Coordenadas del usuario" + latLng, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Coordenadas del usuario " + latLng, Toast.LENGTH_SHORT).show();
     }
 
     private void getCurrentLocation() {

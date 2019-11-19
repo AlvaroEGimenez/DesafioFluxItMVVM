@@ -25,14 +25,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdapterUser extends RecyclerView.Adapter<AdapterUser.CustomViewHolder> implements Filterable {
     private static final int VIEW_TYPE_ITEM = 0;
-    public static final int VIEW_TYPE_LOADING = 1;
+    private static final int VIEW_TYPE_LOADING = 1;
     private List<RamdomUserResponse> responseList;
     private List<RamdomUserResponse> responseListFilter;
     private Context context;
     private UserClick userClick;
 
 
-    public AdapterUser(List<RamdomUserResponse> responseList, Context context, UserClick userClick) {
+    AdapterUser(List<RamdomUserResponse> responseList, Context context, UserClick userClick) {
         this.responseList = responseList;
         this.responseListFilter = responseList;
         this.context = context;
@@ -58,7 +58,7 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.CustomViewHold
         if (holder instanceof DataHolder) {
          ((DataHolder) holder).textViewName.setText(responseList.get(position).getName().getFirst());
             ((DataHolder) holder).textViewSurName.setText(responseList.get(position).getName().getLast());
-            Glide.with(context).load(responseList.get(position).getPicture().getMedium()).into(((DataHolder) holder).circleImageView);
+            Glide.with(context).load(responseList.get(position).getPicture().getLarge()).into(((DataHolder) holder).circleImageView);
             holder.itemView.setOnClickListener(v -> userClick.onClick(responseList.get(position)));
         }
     }
@@ -69,17 +69,17 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.CustomViewHold
         return responseList.size();
     }
 
-    public void addData(List<RamdomUserResponse> data) {
+    void addData(List<RamdomUserResponse> data) {
         responseList.addAll(data);
         notifyDataSetChanged();
     }
 
-    public void addNullData() {
+    void addNullData() {
         responseList.add(null);
         notifyItemInserted(responseList.size() - 1);
     }
 
-    public void removeNull() {
+    void removeNull() {
         responseList.remove(responseList.size() - 1);
         notifyItemRemoved(responseList.size());
     }
@@ -129,14 +129,14 @@ public class AdapterUser extends RecyclerView.Adapter<AdapterUser.CustomViewHold
 
     class ProgressViewHolder extends CustomViewHolder {
         ProgressBar progressBar;
-        public ProgressViewHolder(View itemView) {
+        ProgressViewHolder(View itemView) {
             super(itemView);
             progressBar = itemView.findViewById(R.id.progressbarRow);
         }
     }
 
     class CustomViewHolder extends RecyclerView.ViewHolder {
-        public CustomViewHolder(View itemView) {
+        CustomViewHolder(View itemView) {
             super(itemView);
         }
     }

@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements PersonViewModel.s
         linearLayoutManager = new LinearLayoutManager(this);
 
         model = ViewModelProviders.of(this).get(PersonViewModel.class);
-
         model.setShowError(this);
 
         callApi();

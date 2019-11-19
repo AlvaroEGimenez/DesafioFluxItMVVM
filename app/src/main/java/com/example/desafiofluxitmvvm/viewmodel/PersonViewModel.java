@@ -86,10 +86,7 @@ public class PersonViewModel extends ViewModel {
 
             }
         });
-
-
     }
-
 
     public interface showError {
         void error(String error);
